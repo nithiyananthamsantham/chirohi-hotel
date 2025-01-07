@@ -32,12 +32,14 @@ export class ReservationFormComponent implements OnInit {
 
 
 
+
+
     if (id) {
       this.reservationService.getReservationById(id).subscribe(reservation => {
         if (reservation)
           this.reservationForm.patchValue(reservation)
       })
-
+      
 
     }
   }

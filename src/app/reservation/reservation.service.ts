@@ -3,6 +3,8 @@ import { Reservation } from '../models/reservation';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { LoginResponse } from '../models/loginResponse';
+import { LoginRequest } from '../models/loginRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class ReservationService {
   //private apiUrl = "http://localhost:3001";
   private apiUrl = "http://localhost:9191";
   private reservations: Reservation [] = [];
+  
 
   // constructor() {
   //   let savedReservation = localStorage.getItem("reservations");
@@ -21,6 +24,10 @@ export class ReservationService {
 
   constructor(private http: HttpClient){
 
+  }
+
+  getData() {
+    return this.http.get('/api/data'); // The interceptor will add the Authorization header
   }
 
   // CRUD
@@ -68,5 +75,8 @@ export class ReservationService {
    // localStorage.setItem("reservations", JSON.stringify(this.reservations));
 
    return this.http.put<void>(this.apiUrl + "/updateReservation/"+id , updateReservation);
+  }
+  logonAndGgetToken(loginRequest: LoginRequest){
+    return this.http.post<LoginResponse>(this.apiUrl+"/loginAndGetToken",loginRequest);
   }
 }

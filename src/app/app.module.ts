@@ -5,15 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { ReservationModule } from './reservation/reservation.module';
-import {HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReservationCustomPipePipe } from './reservation-custom-pipe.pipe';
-import { ReservationLoginComponent } from './reservation-login/reservation-login.component';
+import { AuthInterceptor } from './AuthInterceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReservationCustomPipePipe,
-    ReservationLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +22,11 @@ import { ReservationLoginComponent } from './reservation-login/reservation-login
     HttpClientModule
   
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
